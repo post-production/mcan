@@ -40,15 +40,15 @@ dependencies {
     // You may need to force-disable transitiveness on them.
 
     // For annotation support
-    compile 'com.squareup:kotlinpoet:1.6.0'
-    implementation "com.google.auto.service:auto-service:1.0-rc4"
+    modImplementation 'com.squareup:kotlinpoet:1.6.0'
+    modImplementation "com.google.auto.service:auto-service:1.0-rc4"
     kapt "com.google.auto.service:auto-service:1.0-rc4"
 
     // JSON
-    implementation 'com.beust:klaxon:5.0.1'
+    modImplementation 'com.beust:klaxon:5.0.1'
 
     // For GUI
-    modImplementation "io.github.cottonmc:LibGui:1.8.2+1.15.2"
+    modImplementation "io.github.cottonmc:LibGui:1.10.0+1.15.2"
 }
 
 processResources {
