@@ -53,7 +53,6 @@ class Generator : AbstractProcessor() {
 			AsBlock::class.java.name,
 			AsBlockEntity::class.java.name,
 			AsBlockItem::class.java.name,
-			AsMachine::class.java.name,
 			AsItem::class.java.name,
 			BlastingRecipe::class.java.name,
 			DropsSome::class.java.name,
@@ -129,9 +128,6 @@ class Generator : AbstractProcessor() {
 
 		// JSON Files
 		JSONGenerator.process("$generatedSourcesRoot/json", set, env, this.identifiers)
-
-		// Custom Machines
-		processMachine(generatedSourcesRoot, set, env, agen, idGetter, blockEntityGetter, blockGetter, itemGetter)
 
 		// Each annotation is processed exactly twice. We check here to see if we have
 		//   already processed these tags, if so we do nothing.

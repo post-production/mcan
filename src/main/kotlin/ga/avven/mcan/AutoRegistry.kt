@@ -17,7 +17,6 @@ abstract class AutoRegistry() {
 	abstract val BLOCK: Getter
 	abstract fun BLOCK_ENTITY(owner: KClass<*>): Getter
 	abstract fun ITEM(owner: KClass<*>): Getter
-	abstract val MACHINE: Getter
 
 	init {
 		INSTANCE = this

@@ -19,10 +19,6 @@ minecraft {
 
 repositories {
     maven { url = "http://maven.fabricmc.net/" }
-    maven {
-        name = "CottonMC"
-        url = "https://server.bbkr.space/artifactory/libs-release"
-    }
 }
 
 dependencies {
@@ -46,9 +42,6 @@ dependencies {
 
     // JSON
     modImplementation 'com.beust:klaxon:5.0.1'
-
-    // For GUI
-    modImplementation "io.github.cottonmc:LibGui:1.10.0+1.15.2"
 }
 
 processResources {
