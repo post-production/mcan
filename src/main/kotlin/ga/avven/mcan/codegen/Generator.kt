@@ -15,12 +15,6 @@ import com.google.common.base.CaseFormat
 import com.squareup.kotlinpoet.*
 import com.squareup.kotlinpoet.ParameterizedTypeName.Companion.parameterizedBy
 
-import net.minecraft.block.Block
-import net.minecraft.block.entity.BlockEntityType
-import net.minecraft.item.BlockItem
-import net.minecraft.item.Item
-import net.minecraft.util.Identifier
-
 import ga.avven.mcan.annotations.*
 import ga.avven.mcan.AutoRegistry
 import javax.lang.model.type.MirroredTypeException
@@ -33,6 +27,12 @@ class Generator : AbstractProcessor() {
 		const val GENERATED_KAPT = "kapt.kotlin.generated"
 		const val PACKAGE = "ga.avven.mcan"
 		const val CLASS_NAME = "AutoRegistry_impl"
+
+		val MINECRAFT_ID: ClassName = ClassName("net.minecraft.util", "Identifier")
+		val MINECRAFT_BLOCK: ClassName = ClassName("net.minecraft.block", "Block")
+		val MINECRAFT_BLOCK_ITEM: ClassName = ClassName("net.minecraft.item", "BlockItem")
+		val MINECRAFT_BLOCK_ENTITY_TYPE: ClassName = ClassName("net.minecraft.block.entity", "BlockEntityType")
+		val MINECRAFT_ITEM: ClassName = ClassName("net.minecraft.item", "Item")
 	}
 
 	internal val generatedSourcesRoot by lazy { processingEnv.options[GENERATED_KAPT].orEmpty() }
@@ -253,14 +253,14 @@ class Generator : AbstractProcessor() {
 		if (!this.identifierCache.contains(idParam)) {
 			this.identifierCache.add(idParam)
 			classBuilder.addProperty(
-				PropertySpec.builder(idParam, Identifier::class).initializer("Identifier(%S)", idLiteral.toString()).build()
+				PropertySpec.builder(idParam, MINECRAFT_ID).initializer("Identifier(%S)", idLiteral.toString()).build()
 			)
 		}
 
 		// First add the Block
 		classBuilder
 			.addProperty(
-				PropertySpec.builder(idBlockParam, Block::class).initializer("%L()", canonicalName).build()
+				PropertySpec.builder(idBlockParam, MINECRAFT_BLOCK).initializer("%L()", canonicalName).build()
 			)
 		funBuilder
 			.addStatement("Registry.register(Registry.BLOCK, %L, %L)", idParam, idBlockParam)
@@ -290,14 +290,14 @@ class Generator : AbstractProcessor() {
 		if (!this.identifierCache.contains(idParam)) {
 			this.identifierCache.add(idParam)
 			classBuilder.addProperty(
-				PropertySpec.builder(idParam, Identifier::class).initializer("Identifier(%S)", idLiteral.toString()).build()
+				PropertySpec.builder(idParam, MINECRAFT_ID).initializer("Identifier(%S)", idLiteral.toString()).build()
 			)
 		}
 
 		// First add the Block
 		classBuilder
 			.addProperty(
-				PropertySpec.builder(bEntityParam, BlockEntityType::class.asClassName().parameterizedBy(canonicalName)).mutable().addModifiers(KModifier.LATEINIT).build()
+				PropertySpec.builder(bEntityParam, MINECRAFT_BLOCK_ENTITY_TYPE.parameterizedBy(canonicalName)).mutable().addModifiers(KModifier.LATEINIT).build()
 			)
 		funBuilder
 			.addCode("""
@@ -338,16 +338,16 @@ class Generator : AbstractProcessor() {
 		if (!this.identifierCache.contains(idParam)) {
 			this.identifierCache.add(idParam)
 			classBuilder.addProperty(
-				PropertySpec.builder(idParam, Identifier::class).initializer("Identifier(%S)", idLiteral.toString()).build()
+				PropertySpec.builder(idParam, MINECRAFT_ID).initializer("Identifier(%S)", idLiteral.toString()).build()
 			)
 		}
 
 		classBuilder
 			.addProperty(
-				PropertySpec.builder(idBlockParam, Block::class).initializer("%L()", canonicalName).build()
+				PropertySpec.builder(idBlockParam, MINECRAFT_BLOCK).initializer("%L()", canonicalName).build()
 			)
 			.addProperty(
-				PropertySpec.builder(idItemParam, BlockItem::class).initializer("BlockItem(%L, Item.Settings().group(ItemGroup.%L))", idBlockParam, ann.group).build()
+				PropertySpec.builder(idItemParam, MINECRAFT_BLOCK_ITEM).initializer("BlockItem(%L, Item.Settings().group(ItemGroup.%L))", idBlockParam, ann.group).build()
 			)
 		funBuilder
 			.addStatement("Registry.register(Registry.BLOCK, %L, %L)", idParam, idBlockParam)
@@ -377,13 +377,13 @@ class Generator : AbstractProcessor() {
 		if (!this.identifierCache.contains(idParam)) {
 			this.identifierCache.add(idParam)
 			classBuilder.addProperty(
-				PropertySpec.builder(idParam, Identifier::class).initializer("Identifier(%S)", idLiteral.toString()).build()
+				PropertySpec.builder(idParam, MINECRAFT_ID).initializer("Identifier(%S)", idLiteral.toString()).build()
 			)
 		}
 
 		classBuilder
 			.addProperty(
-				PropertySpec.builder(idItemParam, Item::class).initializer("%L()", canonicalName).build()
+				PropertySpec.builder(idItemParam, MINECRAFT_ITEM).initializer("%L()", canonicalName).build()
 			)
 		funBuilder
 			.addStatement("Registry.register(Registry.ITEM, %L, %L)", idParam, idItemParam)

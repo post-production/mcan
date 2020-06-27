@@ -2,16 +2,12 @@ package ga.avven.mcan.codegen
 
 import com.beust.klaxon.json
 
-import com.squareup.kotlinpoet.ClassName
 import ga.avven.mcan.annotations.*
 
-import kotlin.reflect.KClass
 import java.io.File
 import javax.annotation.processing.RoundEnvironment
 import javax.lang.model.element.*
 import javax.lang.model.type.MirroredTypeException
-
-import net.minecraft.util.Identifier
 
 class JSONGenerator {
 	companion object {
